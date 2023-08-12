@@ -25,7 +25,6 @@ export function useMediaQueries() {
     const extraLargeMin = useMediaQuery("(min-width: 1200px)")
 
     // Max
-    const verySmallMax = useMediaQuery("(max-width: 300px)")
     const smallMax = useMediaQuery("(max-width: 600px)")
     const largeMax = useMediaQuery("(max-width: 992px)")
     

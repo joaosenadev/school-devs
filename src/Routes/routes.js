@@ -8,14 +8,14 @@ import { SideBar } from "../components/Layout/sidebar";
 import { TopBar } from "../components/Layout/TopBar";
 
 // Pages
-import SignIn from "../Pages/SignIn";
-import SignUp from "../Pages/SignUp";
-import Dashboard from "../Pages/Dashboard";
-import PageNotFound from "../Pages/PageNotFound";
-import Settings from "../Pages/Settings";
-import Students from "../Pages/Students";
-import CadastroAluno from "../Pages/CadastroAluno";
-import AlunosInativos from "../Pages/AlunosInativos";
+import SignIn from "../pages/SignIn";
+import SignUp from "../pages/SignUp";
+import Dashboard from "../pages/Dashboard";
+import PageNotFound from "../pages/PageNotFound";
+import Settings from "../pages/Settings";
+import Students from "../pages/Students";
+import CadastroAluno from "../pages/CadastroAluno";
+import AlunosInativos from "../pages/AlunosInativos";
 
 export default function RoutesApp() {
     const { largeMax, largeMin } = useMediaQueries()
