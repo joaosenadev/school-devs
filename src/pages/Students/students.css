@@ -1,0 +1,44 @@
+.alunos-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.search-alunos{
+    width: 600px;
+    padding: 15px;
+    gap: 10px;
+}
+.search-alunos div{
+    display: flex;
+    gap: 10px;
+}
+.alunos-matriculados{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 25px 4em;
+    color: #fff;
+    border-radius: 8px;
+    margin: 20px;
+    background-color: var(--color-gray-02);
+}
+
+.table-alunos{
+    table-layout: fixed;
+    width: 100%;
+    text-align: center;
+}
+.table-alunos .actions{
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+@media (max-width: 1280px) {
+    .search-alunos{
+        width: 100%;
+    }
+}

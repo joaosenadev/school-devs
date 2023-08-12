@@ -1,0 +1,52 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.teste {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 15px;
+}
+
+
+
+.dashboard-card {
+    display: flex;
+    padding: 50px 140px;
+    color: #fff;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--color-blue-01);
+}
+.professores{
+    background-color: var(--color-blue-02);
+}
+
+@media (max-width: 1024px) {
+    .dashboard-card{
+        width: 100%;
+    }
+}
+
+.dashboard-cape {
+    display: flex;
+    width: 100%;
+    height: 350px;
+    margin-bottom: 30px;
+}
+
+.dashboard-cape img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}

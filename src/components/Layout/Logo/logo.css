@@ -1,0 +1,30 @@
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    color: #fff;
+    transition: .3s;
+}
+.logo svg{
+    transform: scale(0.5);
+}
+.logo svg path{
+    stroke: var(--color-blue-01);
+}
+.logo .arrow:last-child{
+    rotate: 180deg;
+}
+.logo h1{
+    margin: 0 auto;
+    font-size: 3rem;
+    font-weight: 600;
+}
+.logo h2{
+    display: flex;
+    padding: 4px 8px;
+    margin: 0 auto;
+    margin-left: 8px;
+    background-color: var(--color-blue-01);
+    border-radius: 4px;
+}

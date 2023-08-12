@@ -1,0 +1,75 @@
+.sidebar-container {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    max-height: calc(100% - 10px);
+    margin: 5px 5px;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: var(--color-gray-03);
+    transition: .3s;
+    z-index: 99;
+}
+
+.sidebar-container .navbar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 15px 25px;
+}
+
+.sidebar-container .navbrand {
+    margin-left: 14px;
+    transform: scale(0.7);
+}
+
+.sidebar-container .nav {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    margin: 14px 0;
+}
+
+.nav-links,
+.nav-settings {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.toggle-nav-btn {
+    position: absolute;
+    right: -60px;
+    bottom: 10px;
+    box-shadow: 0 0 5px 1px #0000004c;
+}
+
+/* Navbar Short */
+
+.nav-links.offDisplay a,
+.nav-settings.offDisplay a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-links.offDisplay svg,
+.nav-settings.offDisplay svg {
+    transform: scale(1.1);
+}
+
+.nav-links.onDisplay span,
+.nav-settings.onDisplay span {
+    display: flex;
+}
+
+.nav-links.offDisplay span,
+.nav-settings.offDisplay span {
+    display: none;
+}
