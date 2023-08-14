@@ -8,11 +8,14 @@ import { collection, getDocs } from "firebase/firestore";
 export default function Dashboard() {
 
   const [teachers, setTeachers] = useState(0)
+  const [students, setStudents] = useState(0)
 
   useEffect(() => {
     async function loadData() {
-      const teachersQuery = await getDocs(collection(db, "professores"))
-      setTeachers(teachersQuery.size)
+      const teachersQuery = (await getDocs(collection(db, "professores"))).size
+      const studentsQuery = (await getDocs(collection(db, "alunos"))).size
+      setTeachers(teachersQuery)
+      setStudents(studentsQuery)
     }
 
     loadData()
@@ -30,7 +33,7 @@ export default function Dashboard() {
       {/* TEMPORARIO.... */}
       <div className="teste">
         <div className="dashboard-card alunos">
-          <h1>0</h1>
+          <h1>{students}</h1>
 
           <span>Alunos</span>
         </div>

@@ -1,4 +1,3 @@
-import "./alunosInativos.css"
 import { Title } from "../../components/Layout/Title"
 import { Button, Form, Table } from "react-bootstrap"
 import { Content } from "../../components/Layout/Content"
