@@ -33,10 +33,10 @@ export default function CadastroAluno() {
         // Matricula
         const matricula = dateOfBirth.replaceAll("-", "") + Math.floor(Math.random() * 9999)
 
-        const infoVariables = [name, dateOfBirth, civilStatus, gender, state, city, state]
+        const allVariables = [name, dateOfBirth, civilStatus, gender, state, city, state]
 
-        for (const infoVariable of infoVariables) {
-            if (infoVariable === "") {
+        for (const variable of allVariables) {
+            if (variable === "") {
                 toast.info("Preencha todos os dados corretamente...")
                 return
             }

@@ -1,5 +1,5 @@
 import { Title } from "../../components/Layout/Title"
-import { Button, Form, Table } from "react-bootstrap"
+import { Button, Form, OverlayTrigger, Table, Tooltip } from "react-bootstrap"
 import { Content } from "../../components/Layout/Content"
 
 // Icons
@@ -14,7 +14,20 @@ const listRef = collection(db, "alunos")
 export default function AlunosInativos() {
 
     const [alunosDesativados, setAlunosDesativados] = useState([])
+    const [search, setSearch] = useState("")
+    const [results, setResults] = useState([])
 
+    useEffect(() => {
+        const termoSearch = search.toLowerCase()
+        const resultsSearch = alunosDesativados.filter((aluno) => (
+            aluno.matricula.toLowerCase().includes(termoSearch) ||
+            aluno.name.toLowerCase().includes(termoSearch))
+        )
+        setResults(resultsSearch)
+    }, [search]);
+
+
+    // Carregar Alunos desativados/inativos
     useEffect(() => {
         async function loadAlunosDesativados() {
             const q = query(listRef, where("status", "==", "Inativo"), orderBy("matricula", "asc"))
@@ -27,6 +40,13 @@ export default function AlunosInativos() {
         loadAlunosDesativados()
     }, []);
 
+
+    const ButtonTip = ({ title, id, children }) => (
+        <OverlayTrigger overlay={<Tooltip id={id}>{title}</Tooltip>}>
+            <Button>{children}</Button>
+        </OverlayTrigger>
+    )
+
     return (
 
         <Content className="alunos-container">
@@ -36,36 +56,50 @@ export default function AlunosInativos() {
                 <Form.Label>Buscar Aluno</Form.Label>
                 <div>
                     <Form.Control
-                        placeholder="Digite o nome do aluno..."
+                        placeholder="Digite o nome ou matrícula do aluno..."
                         id="inputSearch"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                     />
-                    <Button>
-                        <FiSearch size={25} />
-                    </Button>
                 </div>
             </Form>
 
             <Table striped hover border="collapse" className="table-alunos">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Matrícula</th>
-                        <th>Ações</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Matrícula</th>
+                        <th scope="col">Ações</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    {alunosDesativados.map((item, index) => (
+                    {search.length === 0 ? alunosDesativados.map((item, index) => (
                         <tr key={index}>
-                            <td>{item.name}</td>
-                            <td>{item.matricula}</td>
+                            <td data-label="Nome">{item.name}</td>
+                            <td data-label="Matrícula">{item.matricula}</td>
                             <td className="actions">
-                                <Button variant="info">
-                                    <AiOutlineReload size={20} />
-                                </Button>
-                                <Button>Details</Button>
+                                <ButtonTip id="students-details" title="Detalhes do Aluno">
+                                    <FiSearch size={20} />
+                                </ButtonTip>
                             </td>
                         </tr>
-                    ))}
+                    )) : (
+                        results.length > 0 ? results.map((item, index) => (
+                            <tr key={index}>
+                                <td data-label="Nome">{item.name}</td>
+                                <td data-label="Matrícula">{item.matricula}</td>
+                                <td className="actions">
+                                    <ButtonTip id="students-details" title="Detalhes do Aluno">
+                                        <FiSearch size={20} />
+                                    </ButtonTip>
+                                </td>
+                            </tr>
+                        )) : (
+                            <span className="no-results">Sem Resultados...</span>
+                        )
+                    )}
+
                 </tbody>
             </Table>
 

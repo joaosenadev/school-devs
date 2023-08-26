@@ -1,10 +1,10 @@
 import "./students.css"
 import { Title } from "../../components/Layout/Title"
-import { Button, Form, Table } from "react-bootstrap"
+import { Button, Form, OverlayTrigger, Table, Tooltip } from "react-bootstrap"
 import { Content } from "../../components/Layout/Content"
 
 // Icons 
-import { FiSearch, FiTrash } from "react-icons/fi"
+import { FiSearch } from "react-icons/fi"
 import { useEffect } from "react"
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore"
 import { db } from "../../services/firebaseConnection"
@@ -15,7 +15,19 @@ const listRef = collection(db, "alunos")
 export default function Students() {
 
   const [alunos, setAlunos] = useState([])
+  const [search, setSearch] = useState("")
+  const [results, setResults] = useState([])
 
+  useEffect(() => {
+    const termoSearch = search.toLowerCase()
+    const resultsSearch = alunos.filter((aluno) => (
+      aluno.matricula.toLowerCase().includes(termoSearch) ||
+      aluno.name.toLowerCase().includes(termoSearch))
+    )
+    setResults(resultsSearch)
+  }, [search]);
+
+  // Carregar alunos
   useEffect(() => {
     async function loadAlunos() {
       const q = query(listRef, where("status", "==", "Ativo"), orderBy("matricula", "asc"))
@@ -28,6 +40,13 @@ export default function Students() {
     loadAlunos()
   }, []);
 
+
+  const ButtonTip = ({ title, id, children }) => (
+    <OverlayTrigger overlay={<Tooltip id={id}>{title}</Tooltip>}>
+      <Button>{children}</Button>
+    </OverlayTrigger>
+  )
+
   return (
     <Content className="alunos-container">
       <Title name="Alunos" />
@@ -36,12 +55,11 @@ export default function Students() {
         <Form.Label>Buscar Aluno</Form.Label>
         <div>
           <Form.Control
-            placeholder="Digite o nome do aluno..."
+            placeholder="Digite o nome ou matrícula do aluno..."
             id="inputSearch"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-          <Button>
-            <FiSearch size={25} />
-          </Button>
         </div>
       </Form>
 
@@ -49,24 +67,39 @@ export default function Students() {
       <Table striped hover border="collapse" className="table-alunos">
         <thead>
           <tr>
-            <th>Nome</th>
-            <th>Matrícula</th>
-            <th>Ações</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Matrícula</th>
+            <th scope="col">Ações</th>
           </tr>
         </thead>
+
         <tbody>
-          {alunos.map((item, index) => (
+          {search.length === 0 ? alunos.map((item, index) => (
             <tr key={index}>
-              <td>{item.name}</td>
-              <td>{item.matricula}</td>
+              <td data-label="Nome">{item.name}</td>
+              <td data-label="Matrícula">{item.matricula}</td>
               <td className="actions">
-                <Button variant="danger">
-                  <FiTrash size={20} />
-                </Button>
-                <Button>Details</Button>
+                <ButtonTip id="students-details" title="Detalhes do Aluno">
+                  <FiSearch size={20} />
+                </ButtonTip>
               </td>
             </tr>
-          ))}
+          )) : (
+            results.length > 0 ? results.map((item, index) => (
+              <tr key={index}>
+                <td data-label="Nome">{item.name}</td>
+                <td data-label="Matrícula">{item.matricula}</td>
+                <td className="actions">
+                  <ButtonTip id="students-details" title="Detalhes do Aluno">
+                    <FiSearch size={20} />
+                  </ButtonTip>
+                </td>
+              </tr>
+            )) : (
+              <span className="no-results">Sem Resultados...</span>
+            )
+          )}
+
         </tbody>
       </Table>
 

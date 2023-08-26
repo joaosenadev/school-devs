@@ -7,7 +7,7 @@ export function Title({ name }) {
 
   return (
     <div className="title-container">
-      <h1 style={smallMax ? {fontSize: "1.6rem"} : {fontSize: "2rem"}} className="title">{name}</h1>
+      <h1 style={smallMax ? {fontSize: "1.5rem"} : {fontSize: "2rem"}} className="title">{name}</h1>
     </div>
   )
 }
