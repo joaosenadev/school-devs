@@ -16,6 +16,7 @@ import Settings from "../pages/Settings";
 import Students from "../pages/Students";
 import CadastroAluno from "../pages/CadastroAluno";
 import AlunosInativos from "../pages/AlunosInativos";
+import AlunoDetails from "../pages/AlunoDetails";
 
 export default function RoutesApp() {
     const { largeMax, largeMin } = useMediaQueries()
@@ -25,11 +26,12 @@ export default function RoutesApp() {
             {largeMax && <TopBar />}
             {largeMin && <SideBar />}
             <Routes>
-                <Route path="/login" element={<SignIn />} />
+                <Route path="/login" element={<SignIn />} />    
                 <Route path="/register" element={<SignUp />} />
 
                 <Route path="/" element={<Private><Dashboard /></Private>} />
                 <Route path="/alunos" element={<Private><Students /></Private>} />
+                <Route path="/aluno/details/:id" element={<Private><AlunoDetails /></Private>} />
                 <Route path="/cadastrar-aluno" element={<Private><CadastroAluno /></Private>} />
                 <Route path="/alunos-desativados" element={<Private><AlunosInativos /></Private>} />
                 <Route path="/settings" element={<Private><Settings /></Private>} />

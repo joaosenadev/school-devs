@@ -9,6 +9,7 @@ import { useEffect } from "react"
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore"
 import { db } from "../../services/firebaseConnection"
 import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 
 const listRef = collection(db, "alunos")
 
@@ -17,6 +18,7 @@ export default function Students() {
   const [alunos, setAlunos] = useState([])
   const [search, setSearch] = useState("")
   const [results, setResults] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     const termoSearch = search.toLowerCase()
@@ -41,9 +43,11 @@ export default function Students() {
   }, []);
 
 
-  const ButtonTip = ({ title, id, children }) => (
+  const ButtonTip = ({ title, id, children, to }) => (
     <OverlayTrigger overlay={<Tooltip id={id}>{title}</Tooltip>}>
-      <Button>{children}</Button>
+      <Link to={to}>
+        <Button>{children}</Button>
+      </Link>
     </OverlayTrigger>
   )
 
@@ -79,7 +83,7 @@ export default function Students() {
               <td data-label="Nome">{item.name}</td>
               <td data-label="Matrícula">{item.matricula}</td>
               <td className="actions">
-                <ButtonTip id="students-details" title="Detalhes do Aluno">
+                <ButtonTip to={`/aluno/details/${item.matricula}`} id="students-details" title="Detalhes do Aluno">
                   <FiSearch size={20} />
                 </ButtonTip>
               </td>
@@ -90,7 +94,7 @@ export default function Students() {
                 <td data-label="Nome">{item.name}</td>
                 <td data-label="Matrícula">{item.matricula}</td>
                 <td className="actions">
-                  <ButtonTip id="students-details" title="Detalhes do Aluno">
+                  <ButtonTip to={`/aluno/details/${item.matricula}`} id="students-details" title="Detalhes do Aluno">
                     <FiSearch size={20} />
                   </ButtonTip>
                 </td>

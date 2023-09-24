@@ -11,29 +11,22 @@ import { AppContext } from "../../../contexts/appContext"
 
 export function SideBar() {
 
-    const { sidebarWidth, sidebar_large, sidebar_short, setSidebarDisplay, setSidebarWidth } = useContext(AppContext)
+    const { sidebarWidth, sidebar_large, sidebar_short, setSidebarDisplay, setSidebarWidth, routes, routesPath } = useContext(AppContext)
 
     // Rotas
     const path = useLocation().pathname
 
-    const home = "/"
-    const alunos = "/alunos"
-    const cadastrarAluno = "/cadastrar-aluno"
-    const alunosDesativados = "/alunos-desativados"
-    const settings = "/settings"
-
-    const routes = [home, alunos, cadastrarAluno, settings, alunosDesativados]
-
-    if (!routes.includes(path)) {
+    if (!routesPath.includes(path)) {
         return
     }
 
     const routesStyles = {
-        home: path === home ? "nav-btn active" : "nav-btn",
-        alunos: path === alunos ? "nav-btn active" : "nav-btn",
-        cadastrarAluno: path === cadastrarAluno ? "nav-btn active" : "nav-btn",
-        alunosDesativados: path === alunosDesativados ? "nav-btn active" : "nav-btn",
-        settings: path === settings ? "nav-btn active" : "nav-btn",
+        home: path === routes.home ? "nav-btn active" : "nav-btn",
+        alunos: path === routes.alunos ? "nav-btn active" : "nav-btn",
+        cadastrarAluno: path === routes.cadastrarAluno ? "nav-btn active" : "nav-btn",
+        alunosDesativados: path === routes.alunosDesativados ? "nav-btn active" : "nav-btn",
+        settings: path === routes.settings ? "nav-btn active" : "nav-btn",
+        details: path === routes.details ? "nav-btn active" : "nav-btn",
     }
 
     // Tamanho da sidebar
@@ -46,7 +39,7 @@ export function SideBar() {
         <div className="sidebar-container" style={{ width: `${sidebarWidth}px` }}>
             <Navbar className="navbar" data-bs-theme="dark" >
                 <Navbar.Brand className="navbrand">
-                    <Link className="" to={home}>
+                    <Link to={routes.home}>
                         <Logo isShort={sidebarWidth === sidebar_large ? false : true} />
                     </Link>
                 </Navbar.Brand>
@@ -54,22 +47,22 @@ export function SideBar() {
 
                 <Nav variant="pills" className="nav flex-column">
                     <section className={`nav-links ${setSidebarDisplay}`}>
-                        <Link className={routesStyles.home} to={home}>
+                        <Link className={routesStyles.home} to={routes.home}>
                             <FiHome size={25} />
                             <span>Dashboard</span>
                         </Link>
 
-                        <Link className={routesStyles.alunos} to={alunos}>
+                        <Link className={routesStyles.alunos} to={routes.alunos}>
                             <FiUsers size={25} />
                             <span>Alunos</span>
                         </Link>
 
-                        <Link className={routesStyles.cadastrarAluno} to={cadastrarAluno}>
+                        <Link className={routesStyles.cadastrarAluno} to={routes.cadastrarAluno}>
                             <FiUserPlus size={25} />
                             <span>Cadastrar Aluno</span>
                         </Link>
 
-                        <Link className={routesStyles.alunosDesativados} to={alunosDesativados}>
+                        <Link className={routesStyles.alunosDesativados} to={routes.alunosDesativados}>
                             <FiUserX size={25} />
                             <span>Alunos desativados</span>
                         </Link>
@@ -79,7 +72,7 @@ export function SideBar() {
                         <Button className="toggle-nav-btn" onClick={handleIncreaseWidth} variant="primary">
                             {sidebarWidth === sidebar_large ? <BsArrowBarLeft size={20} /> : <BsArrowBarRight size={20} />}
                         </Button>
-                        <Link className={routesStyles.settings} to={settings}>
+                        <Link className={routesStyles.settings} to={routes.settings}>
                             <FiSettings size={25} />
                             <span>Configurações</span>
                         </Link>

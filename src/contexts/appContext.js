@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../services/firebaseConnection"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -24,6 +24,20 @@ export default function AppProvider({ children }) {
     const savedSidebarWidth = localStorage.getItem(LOCAL_STORAGE_SIDEBAR)
     const [sidebarWidth, setSidebarWidth] = useState(savedSidebarWidth ? Number(savedSidebarWidth) : sidebar_large)
     const setSidebarDisplay = sidebarWidth === sidebar_large ? "onDisplay" : "offDisplay"
+
+    // Rotas
+    const { id } = useParams()
+
+    const home = "/"
+    const alunos = "/alunos"
+    const cadastrarAluno = "/cadastrar-aluno"
+    const alunosDesativados = "/alunos-desativados"
+    const settings = "/settings"
+    const details = `/aluno/details/${id}`
+
+    const routesPath = [home, alunos, cadastrarAluno, settings, alunosDesativados, details]
+    const routes = {home, alunos, cadastrarAluno, settings, alunosDesativados, details}
+
 
     // Content Styles
     const contentSideBar = {
@@ -169,6 +183,9 @@ export default function AppProvider({ children }) {
                 sidebar_short,
                 setSidebarDisplay,
 
+                // Rotas
+                routes,
+                routesPath,
                 contentSideBar,
                 contentTopBar,
             }}
