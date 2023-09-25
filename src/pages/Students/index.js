@@ -18,7 +18,6 @@ export default function Students() {
   const [alunos, setAlunos] = useState([])
   const [search, setSearch] = useState("")
   const [results, setResults] = useState([])
-  const navigate = useNavigate()
 
   useEffect(() => {
     const termoSearch = search.toLowerCase()

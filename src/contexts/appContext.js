@@ -25,7 +25,7 @@ export default function AppProvider({ children }) {
     const [sidebarWidth, setSidebarWidth] = useState(savedSidebarWidth ? Number(savedSidebarWidth) : sidebar_large)
     const setSidebarDisplay = sidebarWidth === sidebar_large ? "onDisplay" : "offDisplay"
 
-    // Rotas
+    // Rotas (Sidebar)
     const { id } = useParams()
 
     const home = "/"
@@ -35,8 +35,8 @@ export default function AppProvider({ children }) {
     const settings = "/settings"
     const details = `/aluno/details/${id}`
 
-    const routesPath = [home, alunos, cadastrarAluno, settings, alunosDesativados, details]
     const routes = {home, alunos, cadastrarAluno, settings, alunosDesativados, details}
+    const badRoutes = ["/login", "/register"]
 
 
     // Content Styles
@@ -185,7 +185,8 @@ export default function AppProvider({ children }) {
 
                 // Rotas
                 routes,
-                routesPath,
+                badRoutes,
+
                 contentSideBar,
                 contentTopBar,
             }}

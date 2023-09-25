@@ -11,12 +11,13 @@ import { AppContext } from "../../../contexts/appContext"
 
 export function SideBar() {
 
-    const { sidebarWidth, sidebar_large, sidebar_short, setSidebarDisplay, setSidebarWidth, routes, routesPath } = useContext(AppContext)
+    const { sidebarWidth, sidebar_large, sidebar_short, setSidebarDisplay, setSidebarWidth, routes, badRoutes } = useContext(AppContext)
 
     // Rotas
     const path = useLocation().pathname
+    
 
-    if (!routesPath.includes(path)) {
+    if (badRoutes.find(route => route === path)) {
         return
     }
 
@@ -26,7 +27,6 @@ export function SideBar() {
         cadastrarAluno: path === routes.cadastrarAluno ? "nav-btn active" : "nav-btn",
         alunosDesativados: path === routes.alunosDesativados ? "nav-btn active" : "nav-btn",
         settings: path === routes.settings ? "nav-btn active" : "nav-btn",
-        details: path === routes.details ? "nav-btn active" : "nav-btn",
     }
 
     // Tamanho da sidebar
